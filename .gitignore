@@ -1,0 +1,4 @@
+node_modules
+UsersBrian~1AppDataRoamingnpm-cache
+.env
+package-lock.json

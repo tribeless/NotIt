@@ -1,0 +1,25 @@
+{
+  "name": "notit",
+  "version": "1.0.0",
+  "description": "A task manager/tracker app",
+  "main": "app.js",
+  "scripts": {
+    "dev-server": "node server/app.js",
+    "dev-client": "npm start --prefix client",
+    "dev-all": "concurrently \"npm run dev-server\" \"npm run dev-client\""
+  },
+  "author": "Brian Kyole",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
