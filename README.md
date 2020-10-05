@@ -5,17 +5,21 @@ NotIt is a task managing apllication that tracks users tasks.
 ### Technologies:FrontEnd
 Will keep on being updated... :)
 
-        ***React
-        ***MaterialUI
+        React
+        MaterialUI
+        Redux
+        Apollo-Client
         
 ### Technologies:BackEnd
 
-        ***Express
-        ***Node
+        Express
+        Node
+        Apollo-Server
 
 ### Technologies:Database
 
-        ***MongoDB
+        MongoDB
+        Mongoose
 
 
 ### NotIt has three main components
