@@ -5,20 +5,20 @@ NotIt is a task managing apllication that tracks users tasks.
 ### Technologies:FrontEnd
 Will keep on being updated... :)
 
-        *React
-        *MaterialUI
+        ***React
+        ***MaterialUI
         
 ### Technologies:BackEnd
 
-        *Express
-        *Node
+        ***Express
+        ***Node
 
 ### Technologies:Database
 
-        *MongoDB
+        ***MongoDB
 
 
-    NotIt has three main components
+### NotIt has three main components
 ### Component1 : New Tasks
 
 This feature allows users to add new task to a list of other new tasks. 

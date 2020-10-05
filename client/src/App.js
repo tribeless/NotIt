@@ -1,11 +1,21 @@
 import React from 'react';
 import './App.css';
+import PostForm from './components/PostForm';
+//import AllComponents from './components/LandingPage/index';
+import Posts from './components/Posts';
+import {Provider} from 'react-redux';
+import store from './store';
+
 
 function App() {
   return (
-    <div>
-      Hello name, whats tasks do you have today?
-    </div>
+    <Provider store={store}>
+    <React.Fragment>
+      {/* //<AllComponents /> */}
+      <PostForm />
+      <Posts />
+    </React.Fragment>
+    </Provider>
   );
 }
 

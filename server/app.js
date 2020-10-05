@@ -1,7 +1,23 @@
 const express = require('express');
+const { ApolloServer} = require('apollo-server-express');
+const cors = require('cors');
+const typeDefs = require('./schema');
+const resolvers = require('./resolvers');
+
+require('dotenv').config();
+const configValues = process.env;
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers
+});
 const app = express();
 app.use(express.json());
+app.use(cors({
+    origin:configValues.ORIGIN.split(',')
+}));
+server.applyMiddleware({app})
 
-app.use('/',require('./routes/index'));
-app.use('/users',require('./routes/users'));
-app.listen(4000,()=>console.log('App running at localhost:4000'));
+
+app.listen(configValues.PORT,()=>console.log(`🚀 Server ready at http://localhost:${configValues.PORT}${server.graphqlPath}`));
+
