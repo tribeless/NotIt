@@ -56,9 +56,11 @@ const server = new ApolloServer({
     context:async({req,connection})=>{
     //get token from headers
    if(connection){return {}}
-    
-     let users = await Users.findOne({_id:req.user.id});
-
+    let user = req.user || "";
+    let users;
+    if(user){
+      users = await Users.findOne({_id:req.user.id});
+    }
     return {users}
       
 }
