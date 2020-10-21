@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const {Schema,model} = mongoose;
 
 const UserSchema = new Schema({
+    _id:{
+        type:String,
+        required:true,
+    },
     firstName:{
         type:String,
-        required:truncate,
+        required:true,
     },
     lastName:{
         type:String,
