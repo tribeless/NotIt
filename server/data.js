@@ -1,11 +1,13 @@
  const user = [
     {
-        name:'Brian',
-        email:'briankyole10@gmail.com'
+        
+        email:'briankyole10@gmail.com',
+        password: 'Brian'
     },
     {
-        name:'Martin',
-        email:'tribeless53@gmail.com'
+        
+        email:'tribeless53@gmail.com',
+        password: 'Martin'
     }
 ]
 

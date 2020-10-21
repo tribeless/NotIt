@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const {Schema,model} = mongoose;
 
 const TaskSchema = new Schema({
+    _id:{
+    type:Number,
+    required:true,
+    },
     taskType:{
         type:String,
         required:true
