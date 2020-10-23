@@ -66,12 +66,17 @@ const server = new ApolloServer({
 }
 });
 
-
-
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+//global error handler
+app.use((err, req, res, next) => {
+    res.status(err.status).json(err);
+    next();
+});
+
 app.use(cors({
     origin:configValues.ORIGIN.split(','),
     credentials:false

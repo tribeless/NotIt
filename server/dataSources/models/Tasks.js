@@ -4,16 +4,20 @@ const {Schema,model} = mongoose;
 
 const TaskSchema = new Schema({
     _id:{
-    type:Number,
+    type:String,
     required:true,
     },
     taskType:{
         type:String,
         required:true
     },
-    subject:{
+    message:{
         type:String,
         required:true
+    },
+    authorId:{
+        type:Schema.Types.String,
+        ref:'Users'
     },
     createdAt:{
         type:Date,
