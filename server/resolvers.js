@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 //REMEMBER TO HANDLE THIS ERRO
 // UnauthorizedError: jwt expired 
+//say if(error.name===UnauthorizedError){Please login in}
 
 require('dotenv').config();
 const configValues = process.env;
@@ -111,14 +112,64 @@ const resolvers = {
             }
         }
         catch(e){
-            console.log(e.message);
+            
             return {
                 status:false,
                 message:"Could not add your task"
             }
         }
+       },
+       updateTask:async(_,{input:{taskId,message}},context)=>{
+           if(!context.users){
+               throw new Error('Please signIn to perfom this action');
+           }
+           try{
+           const response = Tasks.findById({_id:taskId});
+           
+           if(response._id){
+            await Tasks.updateOne({_id:taskId},{message});
+            return {
+                status: true,
+                message: "Successfully updated your task"
+            }
+           }
+           else{
+               
+               return {
+                   status: false,
+                   message: "Cannot update, no task by that id found"
+               }
+           }
+           
+           }
+           catch(e){
+
+           }
+       },
+       deleteTask:async(_,{taskId},context)=>{
+
+        if (!context.users) {
+            throw new Error('Please signIn to perfom this action');
+        }
+        try{
+        const response = Tasks.findById({_id:taskId});
+        if (response._id) {
+         await Tasks.deleteOne({_id:taskId});
+        return {
+            status: true,
+            message: "Successfully deleted your task"
+        }
+        }else{
+            return {
+                status: false,
+                message: "Cannot delete, no task by that id found"
+            }
+        }
        }
-             
+        catch(e){
+            
+        }  
+    }  
     }
     
 }
