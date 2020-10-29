@@ -10,7 +10,8 @@ const {DB_CONNECTION_URI } = require('./dataSources/configValues');
 const Logger = require('./utils/logger');
 const expressJwt = require('express-jwt');
 const app = express();
-const Users = require('./dataSources/models/Users');
+const {Users} = require('./dataSources/models');
+const {UsersApi,TasksApi,SessionsApi} = require('./routes');
 
 
 require('dotenv').config();
@@ -53,17 +54,27 @@ app.use(expressJwt({
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    dataSources: () => {
+       return { 
+           usersApi: new UsersApi(),
+           sessionsApi:new SessionsApi(),
+           tasksApi:new TasksApi()
+        }
+    },
     context:async({req,connection})=>{
     //get token from headers
-   if(connection){return {}}
+    if(connection){
+        return connection.context;
+    }else{
     let user = req.user || "";
-    let users;
+    
     if(user){
-      users = await Users.findOne({_id:req.user.id});
-    }
-    return {users}
+      let users = await Users.findOne({_id:req.user.id});
+      return {users}  
+    }}
       
-}
+    },
+
 });
 
 app.use(express.json());
@@ -71,11 +82,6 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-//global error handler
-app.use((err, req, res, next) => {
-    res.status(err.status).json(err);
-    next();
-});
 
 app.use(cors({
     origin:configValues.ORIGIN.split(','),
