@@ -84,12 +84,12 @@ app.use(express.urlencoded({
 
 
 app.use(cors({
-    origin:configValues.ORIGIN.split(','),
-    credentials:false
+    origin:configValues.ORIGIN,
+    credentials:true
 }));
 
 
-server.applyMiddleware({app})
+server.applyMiddleware({app,cors:false})
 
 
 app.listen(configValues.PORT,()=>console.log(`🚀 Server ready at http://localhost:${configValues.PORT}${server.graphqlPath}`));
