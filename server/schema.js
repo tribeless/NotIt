@@ -36,7 +36,6 @@ input InputTasks{
     authorId:String
 }
 type Result{
-    token:String!
     status:Boolean
     id:String
 }

@@ -43,18 +43,18 @@ class UsersApi{
             newUser.password = hash;
             const user = await newUser.save();
             const token = jwt.sign({email:user.email,id:user._id},configValues.SECRET,{expiresIn: '1d'});
-            //this.context.users = token;
+
             return {
-                token,
                 status:true,
                 id:user._id
             };
     }
 
-    async getSignedUserDetails(user){
+    async getSignedUserDetails(user,res){
         
         if(!user){
-                throw new Error('Please signIn')
+                res.status(401).send({message:"Please signIn"})
+                throw new Error('Please signIn');
             }
             
         return await Users.find({_id:user._id});

@@ -3,6 +3,7 @@ const {
     ApolloServer,
 } = require('apollo-server-express');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
@@ -45,9 +46,11 @@ async function connectToDatasource() {
 }
 
 connectToDatasource();
+app.use(cookieParser());
 app.use(expressJwt({
     secret:configValues.SECRET,
     algorithms:["HS256"],
+    getToken: req => req.cookies.jwt,
     credentialsRequired:false
 }))
 
@@ -61,20 +64,21 @@ const server = new ApolloServer({
            tasksApi:new TasksApi()
         }
     },
-    context:async({req,connection})=>{
+    context:async({req,connection,res})=>{
     //get token from headers
     if(connection){
         return connection.context;
     }else{
     let user = req.user || "";
-    
-    if(user){
-      let users = await Users.findOne({_id:req.user.id});
-      return {users}  
-    }}
+    let users;
+    if(user) users = await Users.findOne({_id:req.user.id})
+      return {users,res}  
+    }
       
     },
-
+    formatError:(err)=>({
+        message:err.message
+    })
 });
 
 app.use(express.json());

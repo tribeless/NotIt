@@ -3,18 +3,20 @@ const { v4: uuidv4 } = require('uuid');
 
 class TasksApi {
 
-    async getAllUsersTasks(args,user){
+    async getAllUsersTasks(args,user,res){
         const {taskType} = args;
         if(!user){
+            res.status(401).send();
                 throw new Error('Please signIn')
             }
             return await Tasks.find({authorId:user.id,taskType});
     }
 
-    async addUsersTask(args,user){
+    async addUsersTask(args,user,res){
         const {input:{taskType,message,authorId}} = args;
 
             if (!user) {
+                res.status(401).send();
                 throw new Error('Please sign in to perform this action');
             }
             try {
@@ -41,10 +43,11 @@ class TasksApi {
             }
     }
 
-    async updateUserTask(args,user){
+    async updateUserTask(args,user,res){
         const {input:{taskId,message}} = args;
 
         if(!user){
+            res.status(401).send();
                throw new Error('Please signIn to perfom this action');
            }
            try{
@@ -71,10 +74,11 @@ class TasksApi {
            }
     }
 
-    async deleteUserTask(args,user){
+    async deleteUserTask(args,user,res){
         const {taskId} = args;
 
         if (!user) {
+            res.status(401).send();
                 throw new Error('Please signIn to perfom this action');
             }
             try{

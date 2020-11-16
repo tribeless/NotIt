@@ -7,9 +7,8 @@ const configValues = process.env;
 
 class SessionsApi {
 
-    async signInUser(args){
+    async signInUser(args,res){
         const {email,password} = args;
-
         const response =  await Users.findOne({email:email})
 
              if(!response){
@@ -25,13 +24,34 @@ class SessionsApi {
              }
 
              const token= jwt.sign({email:response.email,id:response._id},configValues.SECRET,{expiresIn: '1d'});
-            //  context.user = token;
+
+            res.cookie('jwt', token, {
+                httpOnly: true,
+                secure: configValues.NODE_ENV == "production", //on https
+                maxAge:1000 * 60 * 60 * 24 * 1
+                //domain: 'example.com', //set your domain
+            })
              return {
-                 token,
                  status:true,
                  id:response._id
                 };
 
+    }
+
+    async logOut(res){
+        try{
+            res.cookie("connect.sid", "", { expires: new Date() });
+            return {
+                status:true,
+                message:"successfully logged you out"
+            }
+        }catch(err){
+            console.log(err);
+            return {
+                status: false,
+                message: "failed to log you out"
+            }
+        }
     }
 }
 
