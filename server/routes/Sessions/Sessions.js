@@ -1,4 +1,5 @@
-const {Users} = require('../../dataSources/models')
+const {UserInputError } = require("apollo-server-express");
+const {Users} = require('../../dataSources/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -13,14 +14,14 @@ class SessionsApi {
 
              if(!response){
 
-                throw new Error('No such email registered')
+                throw new UserInputError('No such email registered')
              
              }
 
              const match = await bcrypt.compare(password,response.password);
 
              if(!match){
-                throw new Error('Invalid credentials')
+                throw new UserInputError('Invalid credentials')
              }
 
              const token= jwt.sign({email:response.email,id:response._id},configValues.SECRET,{expiresIn: '1d'});

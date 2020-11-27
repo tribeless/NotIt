@@ -1,3 +1,6 @@
+const {
+    ApolloError,
+} = require('apollo-server-express');
 const {Tasks} = require('../../dataSources/models')
 const { v4: uuidv4 } = require('uuid');
 
@@ -6,8 +9,7 @@ class TasksApi {
     async getAllUsersTasks(args,user,res){
         const {taskType} = args;
         if(!user){
-            res.status(401).send();
-                throw new Error('Please signIn')
+                throw new ApolloError('Please signIn',401);
             }
             return await Tasks.find({authorId:user.id,taskType});
     }
@@ -16,8 +18,7 @@ class TasksApi {
         const {input:{taskType,message,authorId}} = args;
 
             if (!user) {
-                res.status(401).send();
-                throw new Error('Please sign in to perform this action');
+                throw new ApolloError('Please signIn',401);
             }
             try {
                 const newTask = new Tasks({
@@ -27,8 +28,8 @@ class TasksApi {
                     authorId
                 });
 
-                newTask.save();
-
+               const response  = newTask.save();
+                console.log(response.status)
                 return {
                     status: true,
                     message: 'Successfully added your task'
@@ -47,8 +48,7 @@ class TasksApi {
         const {input:{taskId,message}} = args;
 
         if(!user){
-            res.status(401).send();
-               throw new Error('Please signIn to perfom this action');
+            throw new ApolloError('Please signIn',401);
            }
            try{
            const response = Tasks.findById({_id:taskId});
@@ -78,8 +78,7 @@ class TasksApi {
         const {taskId} = args;
 
         if (!user) {
-            res.status(401).send();
-                throw new Error('Please signIn to perfom this action');
+           throw new ApolloError('Please signIn',401);
             }
             try{
             const response = Tasks.findById({_id:taskId});

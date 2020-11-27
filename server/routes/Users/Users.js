@@ -1,4 +1,7 @@
-const {Users} = require('../../dataSources/models')
+const {
+    ApolloError
+} = require('apollo-server-express');
+const {Users} = require('../../dataSources/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
@@ -53,8 +56,7 @@ class UsersApi{
     async getSignedUserDetails(user,res){
         
         if(!user){
-                res.status(401).send({message:"Please signIn"})
-                throw new Error('Please signIn');
+               throw new ApolloError('Please signIn',401);
             }
             
         return await Users.find({_id:user._id});
