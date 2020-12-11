@@ -45,7 +45,7 @@ class UsersApi{
     
             newUser.password = hash;
             const user = await newUser.save();
-            const token = jwt.sign({email:user.email,id:user._id},configValues.SECRET,{expiresIn: '1d'});
+            const token = jwt.sign({email:user.email,id:user._id},configValues.COOKIE_SECRET,{expiresIn: '1d'});
 
             return {
                 status:true,

@@ -24,7 +24,7 @@ class SessionsApi {
                 throw new UserInputError('Invalid credentials')
              }
 
-             const token= jwt.sign({email:response.email,id:response._id},configValues.SECRET,{expiresIn: '1d'});
+             const token= jwt.sign({email:response.email,id:response._id},configValues.COOKIE_SECRET,{expiresIn: '1d'});
 
             res.cookie('jwt', token, {
                 httpOnly: true,
