@@ -17,6 +17,19 @@ await axios.post(url,{
     variables
 });
 
+const usersDetails = async variables =>
+await axios.post(url,{
+    query:`
+        query{
+            usersDetails{
+                email
+                firstName
+                lastName
+            }
+        }
+    `
+})
+
 const signOut = async variables =>
 await axios.post(url,{
     query:`
@@ -64,10 +77,52 @@ await axios.post(url,{
       : null,
 );
 
+const updateTask = async (variables)=>
+await axios.post(url,{
+    query:`
+        mutation updateTask($input:UpdateTasks!){
+            updateTask(input:$input){
+                status
+                message
+            }
+        }
+    `,
+    variables
+});
+
+const deleteTask = async variables =>
+await axios.post(url,{
+    query:`
+        mutation deleteTask($taskId:String!){
+            deleteTask(taskId:$taskId){
+                status
+                message
+            }
+        }
+    `,
+    variables
+});
+
+const usersTasks = async variables =>
+await axios.post(url,{
+    query:`
+        query usersTasks($taskType:String!){
+            usersTasks(taskType:$taskType){
+                message
+                id
+            }
+        }
+    `,
+    variables
+});
 
 module.exports={
     signIn,
     signOut,
     signUp,
-    addTasks
+    addTasks,
+    updateTask,
+    deleteTask,
+    usersTasks,
+    usersDetails
 }

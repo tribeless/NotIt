@@ -53,7 +53,7 @@ class UsersApi{
             };
     }
 
-    async getSignedUserDetails(user,res){
+    async getSignedUserDetails(user){
         
         if(!user){
                throw new ApolloError('Please signIn',401);

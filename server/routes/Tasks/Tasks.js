@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 
 class TasksApi {
 
-    async getAllUsersTasks(args,user,res){
+    async getAllUsersTasks(args,user){
         const {taskType} = args;
         if(!user){
                 throw new ApolloError('Please signIn',401);
@@ -14,7 +14,7 @@ class TasksApi {
             return await Tasks.find({authorId:user.id,taskType});
     }
 
-    async addUsersTask(args,user,res){
+    async addUsersTask(args,user){
         const {input:{taskType,message,authorId}} = args;
 
             if (!user) {
@@ -44,7 +44,7 @@ class TasksApi {
             }
     }
 
-    async updateUserTask(args,user,res){
+    async updateUserTask(args,user){
         const {input:{taskId,message}} = args;
 
         if(!user){
@@ -74,7 +74,7 @@ class TasksApi {
            }
     }
 
-    async deleteUserTask(args,user,res){
+    async deleteUserTask(args,user){
         const {taskId} = args;
 
         if (!user) {
