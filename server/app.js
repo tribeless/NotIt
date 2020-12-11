@@ -48,7 +48,7 @@ async function connectToDatasource() {
 connectToDatasource();
 app.use(cookieParser());
 app.use(expressJwt({
-    COOKIE_SECRET:configValues.COOKIE_SECRET,
+    secret:configValues.COOKIE_SECRET,
     algorithms:["HS256"],
     getToken: req => req.cookies.jwt,
     credentialsRequired:false
