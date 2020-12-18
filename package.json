@@ -7,7 +7,7 @@
     "start": "nodemon server/app.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.jsx .",
-    "test": "mocha 'server/**/*.test.js'"
+    "test": "mocha 'server/**/*.test.js' --timeout 10000"
   },
   "repository": {
     "type": "git",

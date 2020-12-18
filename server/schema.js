@@ -33,7 +33,7 @@ input UserData{
 input InputTasks{
     taskType:TaskType!
     message:String!
-    authorId:String
+    authorId:String!
 }
 type Result{
     status:Boolean

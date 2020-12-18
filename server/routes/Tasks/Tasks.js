@@ -11,7 +11,12 @@ class TasksApi {
         if(!user){
                 throw new ApolloError('Please signIn',401);
             }
+            try{
             return await Tasks.find({authorId:user.id,taskType});
+            }
+            catch(e){
+                throw new Error("Could not retrieve your tasks!");
+            }
     }
 
     async addUsersTask(args,user){
@@ -29,7 +34,6 @@ class TasksApi {
                 });
 
                const response  = newTask.save();
-                console.log(response.status)
                 return {
                     status: true,
                     message: 'Successfully added your task'
@@ -37,10 +41,7 @@ class TasksApi {
                 }
             } catch (e) {
 
-                return {
-                    status: false,
-                    message: "Could not add your task"
-                }
+                throw new Error("Could not add your task!");
             }
     }
 
@@ -60,17 +61,10 @@ class TasksApi {
                 message: "Successfully updated your task"
             }
            }
-           else{
-               
-               return {
-                   status: false,
-                   message: "Cannot update, no task by that id found"
-               }
-           }
            
            }
            catch(e){
-
+            throw new Error("Could not update your task!");
            }
     }
 
@@ -88,15 +82,10 @@ class TasksApi {
                 status: true,
                 message: "Successfully deleted your task"
             }
-            }else{
-                return {
-                    status: false,
-                    message: "Cannot delete, no task by that id found"
-                }
             }
-            }
+        }
             catch(e){
-                
+                throw new Error("Could not delete your task!");
             }  
     }
 }

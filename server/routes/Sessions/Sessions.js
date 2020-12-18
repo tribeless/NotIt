@@ -49,7 +49,6 @@ class SessionsApi {
                 message:"successfully logged you out"
             }
         }catch(err){
-            console.log(err);
             return {
                 status: false,
                 message: "failed to log you out"

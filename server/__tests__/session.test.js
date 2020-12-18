@@ -1,4 +1,5 @@
 const chai = require("chai");
+const mongoose = require('mongoose');
 const randomEmail = require('random-email');
 const expect = chai.expect;
 const {
@@ -12,6 +13,24 @@ const {
     usersDetails
 } = require("./api");
 
+require("dotenv").config();
+const configValues = process.env;
+
+let db;
+let signedInUser;
+
+describe("run all tests",()=>{
+
+    before(async () => {
+        db = await mongoose.connect(configValues.TEST_DB_CONNECTION_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+    });
+
+    after(async () => {
+        await db.connection.close();
+    });
 
 describe("signin user",()=>{
     it("should return status true and login user",async()=>{
@@ -185,5 +204,7 @@ describe("user's task",()=>{
         const [errors] = response.data.errors;
         expect(errors.message).to.eql("Please signIn");
     }).timeout(10000);
+
+});
 
 });
