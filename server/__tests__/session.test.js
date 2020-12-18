@@ -22,7 +22,7 @@ let signedInUser;
 describe("run all tests",()=>{
 
     before(async () => {
-        db = await mongoose.connect("mongodb+srv://notit:briankyole@cluster0.pkg2s.mongodb.net/test?retryWrites=true&w=majority", {
+        db = await mongoose.connect(`mongodb+srv://${configValues.PROJECT}:${configValues.PASSWORD}@${configValues.CLUSTER}.pkg2s.mongodb.net/${configValues.DATABASE}?retryWrites=true&w=majority`, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
