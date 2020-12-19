@@ -1,5 +1,7 @@
 ## NOTIT
 
+[![Build Status](https://travis-ci.com/tribeless/notit-server.svg?branch=dev)](https://travis-ci.com/tribeless/notit-server)
+
 NotIt is a task managing apllication that tracks users tasks. 
 
 ### Technologies:FrontEnd

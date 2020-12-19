@@ -4,10 +4,10 @@
   "description": "a task managing/tracking app",
   "main": "app.js",
   "scripts": {
-    "start-server": "nodemon server/app.js",
-    "start-client": "npm start --prefix client",
-    "start-all": "concurrently \"npm run start-server\" \"npm run start-client\"",
-    "lint": "eslint."
+    "start": "nodemon server/app.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix --ext .js,.jsx .",
+    "test": "mocha 'server/**/*.test.js' --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -46,12 +46,18 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
+    "axios": "^0.21.0",
+    "chai": "^4.2.0",
     "eslint": "^7.10.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "nodemon": "^2.0.4"
+    "faker": "^5.1.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.4",
+    "random-email": "^1.0.3",
+    "supertest": "^6.0.1"
   }
 }

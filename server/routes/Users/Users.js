@@ -1,4 +1,7 @@
-const {Users} = require('../../dataSources/models')
+const {
+    ApolloError
+} = require('apollo-server-express');
+const {Users} = require('../../dataSources/models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
@@ -42,10 +45,9 @@ class UsersApi{
     
             newUser.password = hash;
             const user = await newUser.save();
-            const token = jwt.sign({email:user.email,id:user._id},configValues.SECRET,{expiresIn: '1d'});
-            //this.context.users = token;
+            const token = jwt.sign({email:user.email,id:user._id},configValues.COOKIE_SECRET,{expiresIn: '1d'});
+
             return {
-                token,
                 status:true,
                 id:user._id
             };
@@ -54,7 +56,7 @@ class UsersApi{
     async getSignedUserDetails(user){
         
         if(!user){
-                throw new Error('Please signIn')
+               throw new ApolloError('Please signIn',401);
             }
             
         return await Users.find({_id:user._id});
