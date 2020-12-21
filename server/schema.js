@@ -10,6 +10,7 @@ enum TaskType{
 type Query{
     usersDetails:[UserDetails]
     usersTasks(taskType:TaskType!):[UserTasks]!
+    userAvatar:Avatar
 }
 
 type Mutation{
@@ -19,6 +20,12 @@ type Mutation{
     addTasks(input:InputTasks!):Results!
     updateTask(input:UpdateTasks!):Results
     deleteTask(taskId:String!):Results!
+    singleFile(file:Upload!):Results!
+}
+
+type Avatar{
+    fileUrl:String
+    status:Boolean
 }
 input UpdateTasks {
     taskId:String!
@@ -43,6 +50,7 @@ type UserDetails {
     email:String
     firstName:String
     lastName:String 
+    filePath:String
 }
 type Results{
     status:Boolean!

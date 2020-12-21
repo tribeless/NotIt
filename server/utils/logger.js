@@ -23,7 +23,7 @@ const logFilePath = configValues.LOG_PATH;
 const logger = createLogger({
     transports:[
         new DailyLog({
-            filename:"logs/notit-%DATE%.log",
+            filename:logFilePath,
             datePattern:'YYYY-MM-DD-HH'
         })
     ],
