@@ -4,6 +4,7 @@ const {
 } = require('apollo-server-express');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
+const path = require("path");
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const mongoose = require('mongoose');
@@ -12,11 +13,18 @@ const Logger = require('./utils/logger');
 const expressJwt = require('express-jwt');
 const app = express();
 const {Users} = require('./dataSources/models');
-const {UsersApi,TasksApi,SessionsApi} = require('./routes');
+const {UsersApi,TasksApi,SessionsApi,UploadsApi} = require('./routes');
+const makeUploadsDir = require("./utils/createFolder");
 
 
 require('dotenv').config();
 const configValues = process.env;
+
+//create uploads dir if none exist
+const uploadsDir = `${process.cwd()}/uploads`;
+makeUploadsDir(uploadsDir);
+//configValues.STATIC_FILE_UPLOADS_FOLDER_PATH
+app.use(express.static(path.join(process.cwd(),"uploads")));
 
 async function connectToDatasource() {
     try {
@@ -53,7 +61,6 @@ app.use(expressJwt({
     getToken: req => req.cookies.jwt,
     credentialsRequired:false
 }))
-
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -61,7 +68,8 @@ const server = new ApolloServer({
        return { 
            usersApi: new UsersApi(),
            sessionsApi:new SessionsApi(),
-           tasksApi:new TasksApi()
+           tasksApi:new TasksApi(),
+           uploadsApi : new UploadsApi(),
         }
     },
     context:async({req,connection,res})=>{

@@ -4,3 +4,4 @@ UsersBrian~1AppDataRoamingnpm-cache
 package-lock.json
 *.log
 logs/
+/uploads
