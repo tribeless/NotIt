@@ -1,6 +1,7 @@
 ## NOTIT
 
 [![Build Status](https://travis-ci.com/tribeless/notit-server.svg?branch=dev)](https://travis-ci.com/tribeless/notit-server)
+[![Coverage Status](https://coveralls.io/repos/github/tribeless/notit-server/badge.svg?branch=dev)](https://coveralls.io/github/tribeless/notit-server?branch=dev)
 
 NotIt is a task managing apllication that tracks users tasks. 
 
@@ -8,8 +9,8 @@ NotIt is a task managing apllication that tracks users tasks.
 Will keep on being updated... :)
 
         React
-        MaterialUI
-        Redux
+        Ant Design
+        Apollo Cache
         Apollo-Client
         
 ### Technologies:BackEnd

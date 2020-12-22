@@ -27,8 +27,9 @@ await axios.post(url,{
                 lastName
             }
         }
-    `
-})
+    `,
+    variables
+});
 
 const signOut = async variables =>
 await axios.post(url,{

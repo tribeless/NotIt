@@ -49,7 +49,7 @@ async function connectToDatasource() {
             }
         )
        
-        throw new Error(e.message);
+        throw new Error('Could not connect, please contact us if problem persists');
     }
 }
 

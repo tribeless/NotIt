@@ -18,7 +18,7 @@ const configValues = process.env;
 
 let db;
 let signedInUser;
-
+let taskId = "";
 describe("run all tests",()=>{
 
     before(async () => {
@@ -39,6 +39,7 @@ describe("signin user",()=>{
             id: '7985f318-7e2b-4bba-b69f-6602a54bbdec'
         }
     const response = await signIn({email:"brian@gmail.com",password:"M@Tak@s0"});
+    signedInUser = response.data.data.signIn;
     expect(response.data.data.signIn).to.eql(expectedResult)
     }).timeout(10000);
 
@@ -129,7 +130,7 @@ describe("user's task",()=>{
         const expectedResult = [
             {
                 message:"today I have been writing tests",
-                id:""
+                id: "6726eb56-fc17-4cec-830e-f1b1095753e9"
             }
         ]
         const response = await usersTasks({taskType:"new"});
@@ -139,6 +140,7 @@ describe("user's task",()=>{
     it("should throw an error if not a user while fetching tasks",async ()=>{
         const response = await usersTasks({taskType:"new"});
         const [errors] = response.data.errors;
+        console.log(errors)
         expect(errors.message).to.eql("Please signIn");
     }).timeout(10000);
 
@@ -152,8 +154,8 @@ describe("user's task",()=>{
              message:"today I have been writing tests",
              authorId:"7985f318-7e2b-4bba-b69f-6602a54bbdec"
         }
-        const response = await addTasks({input});
-        expect(response).to.eql(expectedResult);
+        const response = await addTasks({input},signedInUser);
+        expect(response.data.data.addTasks).to.eql(expectedResult);
     }).timeout(10000);
 
     it("should throw an error if not logged in while adding user task",async()=>{
@@ -173,7 +175,7 @@ describe("user's task",()=>{
             message: "Successfully updated your task"
         }
         const input = {
-            taskId:"",
+            taskId:"6726eb56-fc17-4cec-830e-f1b1095753e9",
             message:"new string for task update"
         }
         const response = await updateTask({input});
@@ -182,7 +184,7 @@ describe("user's task",()=>{
 
     it("should throw an error if not a user while updating",async()=>{
         const input = {
-            taskId:"",
+            taskId: "6726eb56-fc17-4cec-830e-f1b1095753e9",
             message:"new string for task update"
         }
         const response = await addTasks({input});
@@ -195,13 +197,14 @@ describe("user's task",()=>{
             status: true,
             message: "Successfully deleted your task"
         }
-        const response = await deleteTask({taskId:""});
+        const response = await deleteTask({taskId:"c4b130fc-b692-41d6-b236-8e0e525b23a4"});
         expect(response.data.data.deleteTask).to.eql(expectedResult);
     }).timeout(10000);
 
     it("should throw an error if not user while deleting",async()=>{
-        const response = await deleteTask({taskId:""});
+        const response = await deleteTask({taskId:"c4b130fc-b692-41d6-b236-8e0e525b23a4"});
         const [errors] = response.data.errors;
+        console.log(errors)
         expect(errors.message).to.eql("Please signIn");
     }).timeout(10000);
 
