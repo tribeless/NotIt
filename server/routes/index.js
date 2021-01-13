@@ -1,11 +1,11 @@
-'use strict';
+const UsersApi = require('./Users/Users');
+const SessionsApi = require('./Sessions/Sessions');
+const TasksApi = require('./Tasks/Tasks');
+const UploadsApi = require('./Uploads/Uploads');
 
-const express = require('express');
-const router = express.Router();
-
-
-
-router.get('/index',(req,res)=>{
-    res.json({message:'Welcome to the home route'});
-})
-module.exports = router;
+module.exports = {
+    UsersApi,
+    SessionsApi,
+    TasksApi,
+    UploadsApi
+}

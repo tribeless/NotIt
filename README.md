@@ -1,24 +1,31 @@
 ## NOTIT
 
+[![Build Status](https://travis-ci.com/tribeless/notit-server.svg?branch=dev)](https://travis-ci.com/tribeless/notit-server)
+[![Coverage Status](https://coveralls.io/repos/github/tribeless/notit-server/badge.svg?branch=dev)](https://coveralls.io/github/tribeless/notit-server?branch=dev)
+
 NotIt is a task managing apllication that tracks users tasks. 
 
 ### Technologies:FrontEnd
 Will keep on being updated... :)
 
-        *React
-        *MaterialUI
+        React
+        Ant Design
+        Apollo Cache
+        Apollo-Client
         
 ### Technologies:BackEnd
 
-        *Express
-        *Node
+        Express
+        Node
+        Apollo-Server
 
 ### Technologies:Database
 
-        *MongoDB
+        MongoDB
+        Mongoose
 
 
-    NotIt has three main components
+### NotIt has three main components
 ### Component1 : New Tasks
 
 This feature allows users to add new task to a list of other new tasks. 

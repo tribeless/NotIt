@@ -2,3 +2,8 @@ node_modules
 UsersBrian~1AppDataRoamingnpm-cache
 .env
 package-lock.json
+*.log
+logs/
+/uploads
+/.nyc_output
+/coverage

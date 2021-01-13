@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  nodejs:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: notit_server
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      - mongodb
+    environment:
+      - DB_CONNECTION_URI=$DB_CONNECTION_URI
+    ports:
+      - "4003:4003" 
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules 
+    networks:
+      - notit-network
+    command: npm start
+
+  mongodb:
+    container_name: notit
+    image: mongo
+    volumes:
+      - db_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME= root
+      - MONGO_INITDB_ROOT_PASSWORD= mongo
+    networks:
+      - notit-network
+
+networks:
+  notit-network:
+    driver: bridge
+
+volumes:
+  db_data:
