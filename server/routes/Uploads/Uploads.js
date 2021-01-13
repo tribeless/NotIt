@@ -34,7 +34,6 @@ class UploadsApi {
 
             const newFileName = `${shortId.generate()}-${name}${ext}`;
             if(response){
-            
             const userUploadsDir = `${process.cwd()}/uploads/${response._id}`;
             makeUploadsDir(userUploadsDir);
             const uploadPath = process.cwd() + "/uploads/" + response._id;
@@ -81,6 +80,62 @@ class UploadsApi {
             throw new Error(customerMessage);
             }
         }
+            await Users.update({_id:user.id},{filePath});
+
+            }
+            return {
+                    status: true,
+                    message: 'Successfully uploaded your image'
+
+                }
+        }
+        catch(e){
+        const customerMessage = "Sorry, we were unable to upload your file" ;
+        Logger.log(
+            'error',
+            'Error',
+            {
+                message:e.message
+            }
+        )
+        throw new Error(customerMessage);
+        }
+    }
+
+    async retrieveAvatar(user){
+        if(!user){
+            throw new ApolloError("Please signIn",401);
+        }
+        try{
+                let fileUrl = "";
+                const response = await Users.findById({_id:user.id});
+                if(response){
+                    //lets resize the image the update the path in the db and return the url to client
+                    const outputPath = `${process.cwd()}/uploads/${response._id}`;
+                    const imageToResize = `${process.cwd()}/uploads${response.filePath}`;
+
+                    const result = await resizeImage(imageToResize,outputPath);
+                    fileUrl = `${configValues.STATIC_FILE_BASE_URL}/${response._id}/${result}`;
+                    result && await Users.update({_id:user.id},{filePath:fileUrl});
+
+                };
+                return {
+                    status:true,
+                    fileUrl
+                }
+                
+            }
+            catch(e){
+                const customerMessage = "Sorry, we were unable to fetch your file";
+                Logger.log(
+                    'error',
+                    'Error', {
+                        message: e.message
+                    }
+                )
+                throw new Error(customerMessage);
+            }
+    }
 }
 
 module.exports = UploadsApi;
