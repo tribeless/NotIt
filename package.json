@@ -4,7 +4,7 @@
   "description": "a task managing/tracking app",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server/app.js",
+    "start": "node server/app.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --ext .js,.jsx .",
     "test": "mocha 'server/**/*.test.js' --timeout 10000",
