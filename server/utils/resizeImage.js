@@ -6,7 +6,7 @@ const Logger = require("./logger");
 
 const resizeImage = async(image,outputDir)=>{
     const newFileName = `${shortId.generate()}.png`;
-    await sharp(image).resize(50,60,{
+    await sharp(image).resize(50,40,{
         fit:"inside"
     }).toBuffer().then((data)=>{
         const resizedImage = path.join(outputDir,newFileName);

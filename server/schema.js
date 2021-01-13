@@ -5,12 +5,11 @@ const typeDefs = gql`
 enum TaskType{
     new
     inProgress
-    Completed
+    completed
 }
 type Query{
-    usersDetails:[UserDetails]
-    usersTasks(taskType:TaskType!):[UserTasks]!
-    userAvatar:Avatar
+    usersDetails:[UserDetails]!
+    usersTasks:[UserTasks]!
 }
 
 type Mutation{
@@ -19,14 +18,16 @@ type Mutation{
     signOut:Results
     addTasks(input:InputTasks!):Results!
     updateTask(input:UpdateTasks!):Results
-    deleteTask(taskId:String!):Results!
+    deleteTask(taskId:String!):String
     singleFile(file:Upload!):Results!
+    markAs(input:MarkAsType!):Results!
 }
 
-type Avatar{
-    fileUrl:String
-    status:Boolean
+input MarkAsType{
+    taskType:String!
+    taskId:String!
 }
+
 input UpdateTasks {
     taskId:String!
     message:String!
@@ -57,8 +58,10 @@ type Results{
     message:String!
 }
 type UserTasks{
-    message:String
-    id:String
+    message:String!
+    taskType:String!
+    id:String!
+    updatedAt:String!
 }
 
 `
