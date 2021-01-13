@@ -23,7 +23,6 @@ const configValues = process.env;
 //create uploads dir if none exist
 const uploadsDir = `${process.cwd()}/uploads`;
 makeUploadsDir(uploadsDir);
-//configValues.STATIC_FILE_UPLOADS_FOLDER_PATH
 app.use(express.static(path.join(process.cwd(),"uploads")));
 
 async function connectToDatasource() {
@@ -73,7 +72,6 @@ const server = new ApolloServer({
         }
     },
     context:async({req,connection,res})=>{
-    //get token from headers
     if(connection){
         return connection.context;
     }else{
