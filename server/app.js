@@ -45,7 +45,7 @@ async function connectToDatasource() {
             'error',
             'Error',
             {
-                message:'Could not connect, please contact us if problem persists'
+                message:e.message
             }
         )
        

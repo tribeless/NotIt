@@ -29,7 +29,8 @@ class SessionsApi {
             res.cookie('jwt', token, {
                 httpOnly: true,
                 secure: configValues.NODE_ENV == "production", //on https
-                maxAge:1000 * 60 * 60 * 24 * 1
+                maxAge:1000 * 60 * 60 * 24 * 1,
+                sameSite:"none"
                 //domain: 'example.com', //set your domain
             })
              return {
@@ -43,6 +44,7 @@ class SessionsApi {
         try{
             res.clearCookie("jwt",{
                 path:"/",
+                sameSite:"none"
             })
             return {
                 status:true,

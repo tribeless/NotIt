@@ -6,6 +6,7 @@ const resizeImage = require("../../utils/resizeImage");
 const checkFileSize = require("../../utils/checkFileSize");
 const makeUploadsDir = require("../../utils/createFolder");
 const createFile = require("../../utils/createFile");
+const deleteFile = require("../../utils/deleteFile");
 const Logger = require("../../utils/logger");
 
 require("dotenv").config();
@@ -33,7 +34,6 @@ class UploadsApi {
 
             const newFileName = `${shortId.generate()}-${name}${ext}`;
             if(response){
-                
             const userUploadsDir = `${process.cwd()}/uploads/${response._id}`;
             makeUploadsDir(userUploadsDir);
             const uploadPath = process.cwd() + "/uploads/" + response._id;
@@ -46,10 +46,40 @@ class UploadsApi {
             
             //check file size being uploaded to be 2||<
             if(await checkFileSize(`${uploadPath}/${newFileName}`)>configValues.STATIC_FILE_MAX_SIZE){
+                deleteFile(`${uploadPath}/${newFileName}`);
                 throw new Error("Please upload a file less than 2mb");
             }
 
             //upload image to user db
+                let fileUrl = "";
+            
+                //lets resize the image the update the path in the db and return the url to client
+                const outputPath = `${process.cwd()}/uploads/${response._id}`;
+                const imageToResize = `${process.cwd()}/uploads${filePath}`;
+
+                const result = await resizeImage(imageToResize,outputPath);
+                fileUrl = `${configValues.STATIC_FILE_BASE_URL}/${response._id}/${result}`;
+                result && await Users.updateOne({_id:user.id},{filePath:fileUrl});
+
+                }
+                            
+                return {
+                    status: true,
+                    message: 'Successfully uploaded your image'
+                    }
+            }
+            catch(e){
+            const customerMessage = "Sorry, we were unable to upload your file" ;
+            Logger.log(
+                'error',
+                'Error',
+                {
+                    message:e.message
+                }
+            )
+            throw new Error(customerMessage);
+            }
+        }
             await Users.update({_id:user.id},{filePath});
 
             }

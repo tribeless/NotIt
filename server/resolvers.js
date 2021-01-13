@@ -6,8 +6,7 @@
 const resolvers = {
     Query:{
        usersDetails:async (_,__,{dataSources,users})=>{return dataSources.usersApi.getSignedUserDetails(users);},
-       usersTasks:async(_,args,{dataSources,users})=>{return dataSources.tasksApi.getAllUsersTasks(args,users);},
-       userAvatar:async(_,__,{dataSources,users})=>{return dataSources.uploadsApi.retrieveAvatar(users)}
+       usersTasks:async(_,__,{dataSources,users})=>{return dataSources.tasksApi.getAllUsersTasks(users);}
     },
     Mutation:{
        signUp:async(_,args,{ dataSources})=>{return dataSources.usersApi.addUsers(args);},
@@ -16,7 +15,8 @@ const resolvers = {
        updateTask:async(_,args,{dataSources,users})=>{return dataSources.tasksApi.updateUserTask(args,users);},
        deleteTask:async(_,args,{dataSources,users})=>{return dataSources.tasksApi.deleteUserTask(args,users);},
        signOut:async(_,__,{dataSources,res})=>{return dataSources.sessionsApi.logOut(res);},
-       singleFile:async(_,args,{dataSources,users})=>{return dataSources.uploadsApi.uploadUserFile(users,args)}
+       singleFile:async(_,args,{dataSources,users})=>{return dataSources.uploadsApi.uploadUserFile(users,args)},
+       markAs:async(_,args,{dataSources,users})=>{return dataSources.tasksApi.markAsTask(args,users);}
     }
 }
 
