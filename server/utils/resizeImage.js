@@ -30,14 +30,14 @@ const resizeImage = async(image,outputDir)=>{
 
       try {
           // Read the image.
-          const image = await Jimp.read(image);
+          const newImage = await Jimp.read(image);
           // contain the image to the provided width and height.
           // we will get the center part of the image which is the most significant
           // eslint-disable-next-line no-bitwise
-          await image.contain(50, 40, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
+          await newImage.contain(50, 40, Jimp.HORIZONTAL_ALIGN_CENTER | Jimp.VERTICAL_ALIGN_MIDDLE);
           // Save and overwrite the image
           const resizedImage = path.join(outputDir, newFileName);
-          await image.writeAsync(resizedImage);
+          await newImage.writeAsync(resizedImage);
           return newFileName;
       } catch (e) {
             const customerMessage = "Could not resize your image";
