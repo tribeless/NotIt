@@ -47,7 +47,7 @@ const resizeImage = async(image,outputDir)=>{
                     message: e.message
                 }
             )
-            throw new Error(e);
+            throw new Error(customerMessage);
       }
     
 }

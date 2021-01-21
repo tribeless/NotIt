@@ -78,7 +78,7 @@ class UploadsApi {
                     message:e.message
                 }
             )
-            throw new Error(e);
+            throw new Error(customerMessage);
             }
         }
 }
